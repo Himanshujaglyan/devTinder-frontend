@@ -1,48 +1,65 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Bases_URL } from "../utils/constants";
 import axios from "axios";
 
 const Premium = () => {
-    const handleBuyClick = async (type) => {
-        try {
-          const order = await axios.post(
-            Bases_URL + "/payment/create",
-            {
-              membershipType: type,
-            },
-            { withCredentials: true }
-          );
-      
-          const { amount, currency, notes, orderId } = order.data;
-      
-          const options = {
-            key: "rzp_test_D7fhBXqa6gAN7Q",
-            amount,
-            currency,
-            name: "Dev Tinder",
-            description: "Connect to other device",
-            order_id: orderId,
-            prefill: {
-              name: notes.firstName + " " + notes.lastName,
-              // email: notes.emailId,
-              contact: "9999999999",
-            },
-            theme: {
-              color: "#121212",
-            },
-          };
-      
-          const rzp = new window.Razorpay(options);
-          rzp.open();
-        } catch (error) {
-          console.error("Payment error:", error);
-          console.log("Full error:", error?.response?.data || error.message);
-          alert("Something went wrong while creating payment.");
-        }
-      };
-      
+  const [IsPremium, setIsPremium] = useState(false);
+  useEffect(() => {
+    verifyPremiumUser();
+  }, []);
+  const verifyPremiumUser = async () => {
+    try {
+      const res = await axios.get(Bases_URL + "/premium/verify", {
+        withCredentials: true,
+      });
+      if (res) {
+        setIsPremium(true);
+      }
+    } catch (err) {
+      alert("There is an Issue with Payment!!")
+    }
+  };
+  const handleBuyClick = async (type) => {
+    try {
+      const order = await axios.post(
+        Bases_URL + "/payment/create",
+        {
+          membershipType: type,
+        },
+        { withCredentials: true }
+      );
 
-  return (
+      const { amount, currency, notes, orderId } = order.data;
+
+      const options = {
+        key: "rzp_test_D7fhBXqa6gAN7Q",
+        amount,
+        currency,
+        name: "Dev Tinder",
+        description: "Connect to other device",
+        order_id: orderId,
+        prefill: {
+          name: notes.firstName + " " + notes.lastName,
+          // email: notes.emailId,
+          contact: "9999999999",
+        },
+        theme: {
+          color: "#121212",
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (error) {
+      console.error("Payment error:", error);
+      console.log("Full error:", error?.response?.data || error.message);
+      alert("Something went wrong while creating payment.");
+    }
+  };
+
+  return IsPremium ? (
+    <h1>Your are already premium user</h1>
+  ) : (
     <div className="flex flex-col md:flex-row justify-center items-center gap-8 mt-24 mb-48 px-4">
       {/* Silver Membership */}
       <div className="bg-gradient-to-br from-gray-200 to-gray-100 p-6 rounded-2xl shadow-2xl w-full md:w-1/3 text-center border border-gray-300 backdrop-blur-sm">

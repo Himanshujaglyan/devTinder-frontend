@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Bases_URL } from "../utils/constants";
 import axios from "axios";
+import PremiumStatus from "./PremiumStatus";
 
 const Premium = () => {
   const [IsPremium, setIsPremium] = useState(false);
@@ -58,7 +59,7 @@ const Premium = () => {
   };
 
   return IsPremium ? (
-    <h1>Your are already premium user</h1>
+   <PremiumStatus/>
   ) : (
     <div className="flex flex-col md:flex-row justify-center items-center gap-8 mt-24 mb-48 px-4">
       {/* Silver Membership */}

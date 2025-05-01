@@ -90,6 +90,9 @@ const Navbar = () => {
                 <Link to="/requests" className="hover:text-cyan-400">
                   Requests
                 </Link>
+                <Link to="/premium" className="hover:text-cyan-400">
+                  Premium👑
+                </Link>
               </li>
               <li>
                 <button onClick={handleLogout} className="hover:text-red-500">

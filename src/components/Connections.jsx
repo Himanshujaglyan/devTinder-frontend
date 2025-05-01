@@ -5,6 +5,7 @@ import { addconnections } from "../utils/connectionSlice";
 import ShimmerRequests from "../Shimmer/ShimmerRequests"; // same shimmer reuse
 import NoConnection from "./NoConnection";
 import { Bases_URL } from "../utils/constants";
+import { Link } from "react-router-dom";
 
 const Connections = () => {
   const dispatch = useDispatch();
@@ -58,7 +59,9 @@ const Connections = () => {
                 <p>{age + ", " + gender}</p>
                 <p className="text-sm text-gray-400 line-clamp-2">{about}</p>
                 <div className="card-actions justify-end">
-                  <button className="btn btn-primary btn-sm">View Profile</button>
+                  <Link to={`/chat/${_id}`}>
+                  <button className="btn btn-primary btn-sm">Chat</button>
+                  </Link>
                 </div>
               </div>
             </div>

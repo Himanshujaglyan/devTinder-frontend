@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import { useWindowSize } from "@react-hook/window-size";
+import "../App.css";
 
 const PremiumStatus = () => {
   const [showConfetti, setShowConfetti] = useState(true);
+  const [flipIn, setFlipIn] = useState(false);
   const [width, height] = useWindowSize();
 
   useEffect(() => {
+    setFlipIn(true); // Trigger flip animation
+
     const timer = setTimeout(() => {
       setShowConfetti(false);
-    }, 6000); // show for 4 seconds
+    }, 6000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -17,7 +21,11 @@ const PremiumStatus = () => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-black px-4 relative overflow-hidden">
       {showConfetti && <Confetti width={width} height={height} />}
-      <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-3xl shadow-2xl max-w-md text-center border border-gray-700 backdrop-blur-md z-10">
+      <div
+        className={`bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-3xl shadow-2xl max-w-md text-center border border-gray-700 backdrop-blur-md z-10 transition-transform duration-1000 ${
+          flipIn ? "flip-in" : ""
+        }`}
+      >
         <h1 className="text-3xl font-bold text-yellow-400 mb-4 animate-bounce">
           ⭐ Premium User
         </h1>
@@ -34,3 +42,6 @@ const PremiumStatus = () => {
 };
 
 export default PremiumStatus;
+
+
+

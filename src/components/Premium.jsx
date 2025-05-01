@@ -12,12 +12,11 @@ const Premium = () => {
       const res = await axios.get(Bases_URL + "/premium/verify", {
         withCredentials: true,
       });
-      console.log(res)
-      if (res) {
+      if (res.data) {
         setIsPremium(true);
       }
     } catch (err) {
-      alert("There is an Issue with Payment!!")
+      console.log(err?.response?.data)
     }
   };
   const handleBuyClick = async (type) => {

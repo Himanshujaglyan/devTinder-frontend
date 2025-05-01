@@ -9,7 +9,7 @@ const PremiumStatus = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowConfetti(false);
-    }, 4000); // show for 4 seconds
+    }, 6000); // show for 4 seconds
 
     return () => clearTimeout(timer);
   }, []);

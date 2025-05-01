@@ -13,11 +13,11 @@ const Premium = () => {
       const res = await axios.get(Bases_URL + "/premium/verify", {
         withCredentials: true,
       });
-      if (res.data) {
+      if (res?.data?.isPremium) {
         setIsPremium(true);
       }
     } catch (err) {
-      console.log(err?.response?.data)
+      console.log(err?.response?.data);
     }
   };
   const handleBuyClick = async (type) => {
@@ -47,6 +47,10 @@ const Premium = () => {
         theme: {
           color: "#121212",
         },
+        handler: async function (response) {
+          // Call verify API again to check if user is now premium
+          await verifyPremiumUser();
+        },
       };
 
       const rzp = new window.Razorpay(options);
@@ -59,7 +63,7 @@ const Premium = () => {
   };
 
   return IsPremium ? (
-   <PremiumStatus/>
+    <PremiumStatus />
   ) : (
     <div className="flex flex-col md:flex-row justify-center items-center gap-8 mt-24 mb-48 px-4">
       {/* Silver Membership */}

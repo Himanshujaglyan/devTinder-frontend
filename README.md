@@ -35,6 +35,34 @@
 ------------------------
 ---->>Deploy our application using AWS
 --> There multiple steps to deploy our app to aws server !(on my notion notes backend Node with Name :- Launching a AWS Instance and Deploying )
+------------------------
+💳 Razorpay Payment Gateway Integration Steps:-
+✅ Basic Setup
+    - Sign up on Razorpay & complete KYC.
+    - Create a UI for the premium/payment page.
+    - Backend: Create an API to create an order.
+
+🔐 Configuration
+    - Add your key_id and key_secret in .env file.
+    - Initialize Razorpay in your utils or wherever you handle services.
+
+📦 Order Handling
+    - Use Razorpay SDK to create order on Razorpay.
+    - Create Schema and Model for orders (MongoDB suggested).
+    - Save the created order in your payments collection.
+    - Make your API dynamic (use proper request body, etc.).
+
+🌐 Webhooks and Validation
+    - Setup Razorpay Webhook on your live API to listen for payment events like success, failure, etc.
+
+🔗 References :- 
+📘 GitHub: Razorpay Node SDK Docs
+📘 Server Integration Guide: Integration with Node.js
+
+🔧 Webhook Validation: Webhook Validate Test
+📘 Webhook Payload Docs: Payment Events
+
+----------------------------------
 
 
 

@@ -69,37 +69,49 @@ const Chat = () => {
   };
 
   return (
-    <div className="w-1/2 mx-auto border border-gray-600 m-5 h-[70vh] flex flex-col">
-      <h1 className="p-5 border-b border-gray-600">Chat</h1>
+    <div className="w-full max-w-3xl mx-auto bg-[#1a1a1a] text-white border border-gray-700 rounded-lg mt-6 h-[75vh] flex flex-col shadow-lg">
+      <h1 className="text-xl font-semibold p-5 border-b border-gray-700">Chat</h1>
 
-      <div className="flex-1 overflow-y-scroll p-5">
+      <div className="flex-1 overflow-y-scroll px-6 py-4 space-y-4 custom-scrollbar">
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={`chat ${user.firstName === msg.firstName ? "chat-end" : "chat-start"}`}
+            className={`flex flex-col ${
+              user.firstName === msg.firstName ? "items-end" : "items-start"
+            }`}
           >
-            <div className="chat-header">
-              {msg.firstName}
-              <time className="text-xs opacity-50 ml-2">now</time>
+            <div className="text-xs text-gray-400 mb-1">
+              {msg.firstName} <span className="ml-2">now</span>
             </div>
-            <div className="chat-bubble">{msg.text}</div>
-            <div className="chat-footer opacity-50">Seen</div>
+            <div
+              className={`px-4 py-2 rounded-lg max-w-xs ${
+                user.firstName === msg.firstName
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-800 text-gray-200"
+              }`}
+            >
+              {msg.text}
+            </div>
+            <div className="text-[10px] text-gray-500 mt-1">Seen</div>
           </div>
         ))}
       </div>
 
-      <div className="p-5 border-t border-gray-600 flex items-center gap-2">
+      <div className="p-4 border-t border-gray-700 flex items-center gap-3 bg-[#111]">
         <input
           value={newMessage}
-          className="flex-1 border border-gray-500 text-white rounded p-2"
-          type="text"
           onChange={(e) => setNewMessage(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") sendMessage();
           }}
+          type="text"
           placeholder="Type a message"
+          className="flex-1 bg-[#222] text-white border border-gray-600 rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-blue-600"
         />
-        <button className="btn btn-primary" onClick={sendMessage}>
+        <button
+          onClick={sendMessage}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold"
+        >
           Send
         </button>
       </div>

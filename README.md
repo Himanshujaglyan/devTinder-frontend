@@ -63,8 +63,15 @@
 📘 Webhook Payload Docs: Payment Events
 
 ----------------------------------
-
-
+✅🌐websocket and Socket.io
+    - Building the UI for a chat window on /chat/"targetUserId
+    - Setup socket.io in backend
+    - npm i socket.io
+    - setup frontend socket.io-client
+    - initialise the chat
+    - createSocketConnection
+    - Listen to events
+    
 
 
 

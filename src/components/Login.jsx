@@ -113,7 +113,7 @@ const Login = () => {
                 value={emailId}
                 className="input input-bordered w-full max-w-xs mb-5"
                 onChange={(e) => setemail(e.target.value)}
-                placeholder="abc@gmail.com"
+                placeholder="Email Id"
               />
             </label>
             <label className="form-control w-full max-w-xs">
@@ -125,7 +125,7 @@ const Login = () => {
                 value={password}
                 className="input input-bordered w-full max-w-xs"
                 onChange={(e) => setpassword(e.target.value)}
-                placeholder="●●●●●●"
+                placeholder="Password"
               />
               <p className="text-red-500">{error}</p>
             </label>

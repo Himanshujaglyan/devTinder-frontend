@@ -69,7 +69,7 @@ const Chat = () => {
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto bg-[#1a1a1a] text-white border border-gray-700 rounded-lg mt-6 h-[75vh] flex flex-col shadow-lg">
+    <div className="w-full max-w-3xl mb-14 mx-auto bg-[#1a1a1a] text-white border border-gray-700 rounded-lg mt-6 h-[75vh] flex flex-col shadow-lg">
       <h1 className="text-xl font-semibold p-5 border-b border-gray-700">Chat</h1>
 
       <div className="flex-1 overflow-y-scroll px-6 py-4 space-y-4 custom-scrollbar">

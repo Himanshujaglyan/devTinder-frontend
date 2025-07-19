@@ -3,21 +3,25 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react"; // 👁️ Importing icons
 import { Bases_URL } from "../utils/constants";
+
 const Login = () => {
-  const [error, seterror] = useState();
-  const [firstName, setFirstName] = useState();
-  const [lastName, setLastName] = useState();
-  const [emailId, setemail] = useState();
-  const [password, setpassword] = useState();
+  const [error, seterror] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [emailId, setemail] = useState("");
+  const [password, setpassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [isLoginForm, setIsLoginForm] = useState(true);
   const [notification, setNotification] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const handleLogin = async () => {
     try {
       const res = await axios.post(
-        Bases_URL+"/login",
+        Bases_URL + "/login",
         {
           emailId,
           password,
@@ -31,21 +35,28 @@ const Login = () => {
         return navigate("/");
       }, 400);
     } catch (err) {
-      seterror(err?.response?.data || "Something went wrong!");
+      seterror(err?.response?.data?.message || "Something went wrong!");
       console.log(err);
     }
   };
+
   const handleSignUp = async () => {
-    const res = await axios.post(
-      Bases_URL + "/signup",
-      { firstName, lastName, emailId, password },
-      { withCredentials: true }
-    );
-    dispatch(addUser(res?.data?.data))
-    navigate("/profile")
+    try {
+      const res = await axios.post(
+        Bases_URL + "/signup",
+        { firstName, lastName, emailId, password },
+        { withCredentials: true }
+      );
+      dispatch(addUser(res?.data?.data));
+      navigate("/profile");
+    } catch (err) {
+      seterror(err?.response?.data?.message || "Signup failed!");
+      console.log(err);
+    }
   };
+
   return (
-    <div className="flex justify-center my-44 overscroll-y-none ">
+    <div className="flex justify-center my-44 overscroll-y-none">
       {notification && (
         <div className="toast z-50 toast-center toast-top animate-ping">
           <div className="alert alert-success shadow-lg rounded-xl border-l-4 border-green-500 bg-green-100">
@@ -116,20 +127,33 @@ const Login = () => {
                 placeholder="Email Id"
               />
             </label>
-            <label className="form-control w-full max-w-xs">
+
+            {/* 👁️ Password Input with Eye Toggle */}
+            <label className="form-control w-full max-w-xs relative">
               <div className="label">
                 <span className="label-text">Password</span>
               </div>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 value={password}
-                className="input input-bordered w-full max-w-xs"
+                className="input input-bordered w-full max-w-xs pr-10"
                 onChange={(e) => setpassword(e.target.value)}
                 placeholder="Password"
               />
-              <p className="text-red-500">{error}</p>
+              <span
+                className="absolute right-3 top-8 cursor-pointer text-gray-500"
+                onClick={() => setShowPassword((prev) => !prev)}
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </span>
             </label>
+
+            {/* 🔴 Error Message Below */}
+            {error && (
+              <p className="text-red-500 mt-2 text-sm font-medium">{error}</p>
+            )}
           </div>
+
           <div className="card-actions justify-center">
             <button
               className="btn btn-primary"
@@ -138,15 +162,19 @@ const Login = () => {
               {isLoginForm ? "Login" : "SignUp"}
             </button>
           </div>
+
           <p className="text-center text-sm mt-5 text-gray-300">
-          {isLoginForm ? "New here?" : "Already a user?"}{" "}
-          <span
-            className="text-indigo-600 font-semibold cursor-pointer hover:underline"
-            onClick={() => setIsLoginForm((prev) => !prev)}
-          >
-            {isLoginForm ? "Create an Account" : "Login Now"}
-          </span>
-        </p>
+            {isLoginForm ? "New here?" : "Already a user?"}{" "}
+            <span
+              className="text-indigo-600 font-semibold cursor-pointer hover:underline"
+              onClick={() => {
+                setIsLoginForm((prev) => !prev);
+                seterror(""); // 🧹 Clear error on form switch
+              }}
+            >
+              {isLoginForm ? "Create an Account" : "Login Now"}
+            </span>
+          </p>
         </div>
       </div>
     </div>

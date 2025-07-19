@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { Bases_URL } from "../utils/constants";
+import { useNavigate } from "react-router-dom"; // added for navigation
+import Feed from "./Feed";
 
 const UpdateProfile = ({ user }) => {
   const [firstName, setFirstName] = useState(user.firstName);
@@ -11,9 +13,10 @@ const UpdateProfile = ({ user }) => {
   const [gender, setGender] = useState(user.gender || "male");
   const [age, setAge] = useState(user.age || "0");
   const [about, setAbout] = useState(user.about);
-  const [error, setError] = useState();
   const [notification, setNotification] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // initialize navigate
+
   const saveProfile = async () => {
     try {
       const res = await axios.patch(
@@ -25,11 +28,13 @@ const UpdateProfile = ({ user }) => {
       setNotification(true);
       setTimeout(() => {
         setNotification(false);
+        navigate("/"); // redirect after 3 seconds
       }, 3000);
     } catch (err) {
       console.log(err.message);
     }
   };
+
   return (
     <div className="flex justify-center gap-10 items-start min-h-screen p-3 bg-base-100">
       {notification && (
@@ -60,7 +65,6 @@ const UpdateProfile = ({ user }) => {
         <div className="card-body">
           <h2 className="card-title justify-center">Edit Profile</h2>
           <div className="p-4">
-            {/* input */}
             <label className="form-control w-full ">
               <span className="label-text  mb-1 text-gray-400">First Name</span>
               <input
@@ -124,7 +128,7 @@ const UpdateProfile = ({ user }) => {
                 value={about}
                 onChange={(e) => setAbout(e.target.value)}
                 className="textarea w-full bg-base-100 focus:outline-none focus:ring-0 mb-3 "
-                rows="1" // Adjust the number of rows as needed
+                rows="1"
               />
             </label>
 
@@ -146,7 +150,7 @@ const UpdateProfile = ({ user }) => {
             src={
               profileImage ||
               "https://cdn-icons-png.flaticon.com/512/149/149071.png"
-            } // default user icon
+            }
             alt="Profile"
           />
         </figure>
@@ -156,10 +160,6 @@ const UpdateProfile = ({ user }) => {
           </h2>
           <p>{age + ", " + gender}</p>
           <p className="break-words">{about}</p>
-          {/* <div className="card-actions justify-center">
-            <button className="btn btn-secondary">Ignore</button>
-            <button className="btn btn-primary">Interested</button>
-          </div> */}
         </div>
       </div>
     </div>
